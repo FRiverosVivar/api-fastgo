@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Schema = mongoose.Schema
 const model = mongoose.model
+
 const UserSchema = new Schema({
     Avatar: String,
     Nombre: String,
