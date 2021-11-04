@@ -6,17 +6,13 @@ const Schema = mongoose.Schema
 const model = mongoose.model
 
 const UserSchema = new Schema({
-    Avatar: String,
-    Nombre: String,
-    Apellido: String,
-    username:{
-      type: String,
-      unique: true,
-      lowercase: true
-    },
-    Ingresos: String,
-    Rut: String,
-    email: {
+    Avatar: {type: String, required: false},
+    Name: {type: String, required: true},
+    Lastnames: {type: String, required: true},
+    Income: Number,
+    Dni: {type: String, required: true},
+    IsHaulier: {type: Boolean, required: true},
+    Email: {
         type: String,
         required: false,
         // unique: true,
@@ -28,15 +24,16 @@ const UserSchema = new Schema({
             }
         }
     },
-    password: {
+    Password: {
         type: String,
         required: true,
         minLength: 5
     },
     tokens: [{
+        _id:false,
         token: {
             type: String,
-            required: true
+            required: true,
         }
     }],
     Valoracion: {
@@ -45,24 +42,22 @@ const UserSchema = new Schema({
     },
   },{
   timestamps: true,
-  collection: "_User"
+  collection: "_FG_USERS"
 });
 
 UserSchema.pre('validate', async function(next){
     let user = this
     console.log("user is new", user.isNew)
+    console.log("user is new", user.Email)
     if(user.isNew){
-        if (!user.EsConductor){
-            console.log ("no es conductor")
-            if(!user.email){
+            if(!user.Email){
                 next(new Error('Email es requerido'))
             }
-            const otro_email = await mongoose.model("User").findOne({email: user.email})
+            const otro_email = await mongoose.model("User").findOne({Email: user.Email})
             console.log("otro email:", otro_email)
             if(otro_email){
                 next(new Error('Email debe ser unico'))
             }
-        }
     }
          
     next()
@@ -70,9 +65,10 @@ UserSchema.pre('validate', async function(next){
 UserSchema.pre('save', async function (next) {
     // Hash the password before saving the user model
     const user = this
+    console.log(user)
     if (user.isModified('password')) {
         console.log("se ha modificado la clave")
-        user.password = await bcrypt.hash(user.password, 8)
+        user.Password = await bcrypt.hash(user.Password, 8)
     }
     next()
 })
@@ -80,6 +76,7 @@ UserSchema.methods.generateAuthToken = async function() {
     // Generate an auth token for the user
     const user = this
     const token = jwt.sign({_id: user._id}, "jwt_fastgo_prod")
+    console.log(token)
     user.tokens = user.tokens.concat({token})
     await user.save()
     return token
@@ -94,17 +91,25 @@ UserSchema.methods.ChangeAuthToken = async function(bad_token) {
     return new_token
 }
 
-UserSchema.statics.findByCredentials = async function (username, password) {
+UserSchema.statics.find = async function (Email, Password) {
     // Search for a user by email and password.
-    const user = await this.findOne({ username: username} )
-    if (!user) {
-        throw new Error('Invalid login credentials')
+    try {
+        const user = await this.findOne({ Email: Email} )
+        if (!user) {
+            throw new Error('Invalid Email credentials')
+        }
+        console.log(user)
+        console.log(Password)
+        console.log(user.Password)
+        let isPasswordMatch = await bcrypt.compare(Password, user.Password)
+        console.log(isPasswordMatch)
+        if (!isPasswordMatch) {
+            throw new Error('Invalid Password credentials')
+        }
+        return user
+    } catch(err) {
+        console.log(err)
     }
-    const isPasswordMatch = await bcrypt.compare(password, user.password)
-    if (!isPasswordMatch) {
-        throw new Error('Invalid login credentials')
-    }
-    return user
 }
 
 module.exports = model('User',UserSchema);

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <style>
+            .cube{
+                margin: 0px auto;
+                margin-top:2%;
+                width: 600px;
+                border-left: 3px solid #00275a;
+                border-right: 3px solid #00275a;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                background-position: 0 0, 0 100% ;
+                background-repeat: no-repeat;
+                -webkit-background-size: 100% 3px;
+                -moz-background-size: 100% 3px;
+                background-size: 100% 3px;
+                background-image: -webkit-linear-gradient(left, #00275a 0%, #00275a 100%), -webkit-linear-gradient(left, #00275a 0%, #00275a 100%);
+                background-image: -moz-linear-gradient(left, #00275a 0%, #00275a 100%), -moz-linear-gradient(left, #00275a 0%, #00275a 100%);
+                background-image: -o-linear-gradient(left,#00275a 0%, #00275a 100%), -o-linear-gradient(left,#00275a 0%, #00275a 100%);
+                background-image: linear-gradient(to right, #00275a 0%,#00275a 100%), linear-gradient(to right, #00275a 0%,#00275a 100%);
+            }
+        </style>
+    </head>
+
+    <body>
+      <div style="width: 100%;">
+        <div class="cube">
+              <div style="padding:10%; color: #00275a">
+                <center></center>
+                <center style="color: #00275a">
+                  <h1 >{{title}}</h2>
+                </center>
+                <center style="color: #8f8f8f">
+                  <p>{{{subtitle}}}</p>
+                </center>
+            	</div>
+            <div>
+            </div>
+        </div>
+      </div>
+    </body>
+</html>
+

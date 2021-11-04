@@ -4,15 +4,17 @@ var path = require('path');
 var morgan = require('morgan');
 var cors = require('cors');
 var mongoose = require('mongoose')
-const connection = require('./utils/mongo-db/mongo-db')
+const dotenv = require('dotenv').config()
+var Grid = require('gridfs-stream');
+const connection = require('./src/utils/mongo-db/mongo-db')
 const corsOptions = {
   exposedHeaders: 'x-access-token',
 };
-let gfs;
-connection.once('open', () => {
-  console.log('db is connected');
-  gfs = Grid(connection.db, mongoose.mongo);
-  gfs.collection('fs');
+var gfs;
+connection.once('open', async () => {
+    console.log('db is connected');
+    gfs = Grid(connection.db, mongoose.mongo);
+    gfs.collection('fs');
 });
 var app = express();
 app.use(morgan('dev'));
@@ -21,9 +23,9 @@ app.use(express.json({limit:"100mb", extended: true}));
 app.use(express.urlencoded({limit:"100mb",extended:true}));
 app.use(express.static('public'));
 app.use(express.static(__dirname + '/img/'));
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '/src/views'));
 app.set('view engine', 'jade');
-app.use('/api/v1/users',require('./routes/users'));
+app.use('/api/v1/users',require('./src/routes/users'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
