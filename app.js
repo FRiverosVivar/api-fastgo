@@ -10,11 +10,8 @@ const connection = require('./src/utils/mongo-db/mongo-db')
 const corsOptions = {
   exposedHeaders: 'x-access-token',
 };
-var gfs;
 connection.once('open', async () => {
-    console.log('db is connected');
-    gfs = Grid(connection.db, mongoose.mongo);
-    gfs.collection('fs');
+  console.log('db is connected');
 });
 var app = express();
 app.use(morgan('dev'));
@@ -26,7 +23,10 @@ app.use(express.static(__dirname + '/img/'));
 app.set('views', path.join(__dirname, '/src/views'));
 app.set('view engine', 'jade');
 app.use('/api/v1/users',require('./src/routes/users'));
-
+app.use('/api/v1/requests',require('./src/routes/requests'));
+app.get('/', (req, res) => {  
+  res.sendFile(__dirname + '/index.html');
+});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

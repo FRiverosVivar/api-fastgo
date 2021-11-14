@@ -7,5 +7,5 @@ const chileanTime = (fecha) => {
     let date = now.add(now.utcOffset(), 'minutes').toDate();
     return date; 
 }
-
-export {chileanTime}
+module.exports = chileanTime
+//export {chileanTime}

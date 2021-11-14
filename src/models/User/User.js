@@ -90,7 +90,13 @@ UserSchema.methods.ChangeAuthToken = async function(bad_token) {
     const new_token = await user.generateAuthToken();
     return new_token
 }
-
+UserSchema.statics.findByEmail = async function (Email) {
+    const user = await this.findOne({ Email: Email} )
+    if (!user) {
+        throw new Error({ error: 'Invalid email' })
+    }
+    return user
+}
 UserSchema.statics.find = async function (Email, Password) {
     // Search for a user by email and password.
     try {
