@@ -21,8 +21,8 @@ UsersController.newUser = async (req, res) => {
 }
 UsersController.index = async (req, res) => {
   try{
-      const result = await User.find(req.body.Email, req.body.Password);
-      console.log(req)
+      const result = await User.find(req.query.Email, req.query.Password);
+      console.log(req.query)
       if(!result){
           return res.status(401).send({error: "un error"})
       }
