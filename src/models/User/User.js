@@ -7,7 +7,7 @@ const model = mongoose.model
 
 const UserSchema = new Schema({
     Avatar: {type: String, required: false},
-    Name: {type: String, required: true},
+    Names: {type: String, required: true},
     Lastnames: {type: String, required: true},
     Income: Number,
     Dni: {type: String, required: true},
