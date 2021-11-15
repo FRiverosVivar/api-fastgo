@@ -40,10 +40,10 @@ const UserSchema = new Schema({
             required: true,
         }
     }],
-    Valoracion: {
+    Valoracion: [{
       valor: Number,
       numero: Number
-    },
+    }],
   },{
   timestamps: true,
   collection: "_FG_USERS"
