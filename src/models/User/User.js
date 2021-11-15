@@ -12,6 +12,10 @@ const UserSchema = new Schema({
     Income: Number,
     Dni: {type: String, required: true},
     IsHaulier: {type: Boolean, required: true},
+    CuentaBanco: {type: String, required: true},
+    CorreoBanco: {type: String, required: true},
+    NombreBanco: {type: String, required: true},
+    TipoCuenta: {type: String, required: true},
     Email: {
         type: String,
         required: false,
