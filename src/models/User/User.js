@@ -41,6 +41,7 @@ const UserSchema = new Schema({
         }
     }],
     Rating: {type: [Number], required: true},
+    Phone: {type: String, required: true},
   },{
   timestamps: true,
   collection: "_FG_USERS"
