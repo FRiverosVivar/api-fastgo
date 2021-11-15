@@ -4,7 +4,7 @@ const User = require('../../models/User/User')
 const chileanTime = require('../../utils/cl_time/cl_time')
 RequestsController.index =  async (req,res) => {
     try{
-        let userByEmail = await User.findByEmail(req.body.Email)
+        let userByEmail = await User.findByEmail(req.query.Email)
         let solicitudes = await Request.find()
         console.log(solicitudes)
         // console.log(user)
