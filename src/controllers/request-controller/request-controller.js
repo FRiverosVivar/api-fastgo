@@ -29,6 +29,9 @@ RequestsController.create = async (req, res) => {
         const cliente = await User.findOne({_id: req.body.ClientId})
         console.log("cliente", cliente)
         solicitud.Cliente = cliente
+        delete solicitud.Cliente.tokens
+        delete solicitud.Cliente.password
+        
         if(solicitud.Estado == 1){
           solicitud.DateFrom = chileanTime(new Date(req.DateFrom)).toLocaleDateString("en-GB")
           solicitud.DateFromString = req.DateFrom
