@@ -57,7 +57,7 @@ RequestsController.create = async (req, res) => {
 };
 RequestsController.start_request = async (req, res) => {
     try {
-        const id = req.query.id;
+        const id = req.query.Id;
         const Email = req.query.Email
         const haulier = await User.findOne({Email: Email})
         const request = await Request.findOne({_id: id})
@@ -84,7 +84,7 @@ RequestsController.start_request = async (req, res) => {
     }
 }
 RequestsController.final_dir = async (req, res) => {
-    const id = req.query.id;
+    const id = req.query.Id;
     const solicitud = await Request.findOne({_id: id})
   
     if(solicitud.Estado != 3){
@@ -101,7 +101,7 @@ RequestsController.final_dir = async (req, res) => {
     });
 }
 RequestsController.stop_request = async (req, res) => {
-    const id = req.query.id;
+    const id = req.query.Id;
     const solicitud = await Request.findOne({_id: id})
   
     if(solicitud.Estado != 5){
@@ -118,7 +118,7 @@ RequestsController.stop_request = async (req, res) => {
     });
 }
 RequestsController.set_as_disponible = async (req, res) => {
-    const id = req.params.id;
+    const id = req.query.Id;
     const solicitud = await Request.findOne({_id: id})
   
     if(solicitud.Estado != 1){
