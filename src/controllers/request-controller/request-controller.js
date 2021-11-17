@@ -5,8 +5,15 @@ const chileanTime = require('../../utils/cl_time/cl_time')
 const mongoose = require('mongoose')
 RequestsController.index =  async (req,res) => {
     try{
-        let userByEmail = await User.findByEmail(req.query.Email)
         let solicitudes = await Request.find()
+        for(let solicitud of solicitudes){
+          if(solicitud.status >= 3){
+            
+            let haulier = await User.findOne({_id: solicitud.Haulier})
+            solicitud.Haulier = Haulier
+
+          }
+        }
         // console.log(user)
         // for(let solicitud of solicitudes) {
         //     if(solicitud.Status ===  1 && solicitud.Cliente.Email === User.Email){
