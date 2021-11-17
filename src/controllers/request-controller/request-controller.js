@@ -58,7 +58,9 @@ RequestsController.create = async (req, res) => {
 RequestsController.start_request = async (req, res) => {
     try {
         const id = req.query.Id;
+        console.log(id)
         const Email = req.query.Email
+        console.log(Email)
         const haulier = await User.findOne({Email: Email})
         const request = await Request.findOne({_id: id})
       
