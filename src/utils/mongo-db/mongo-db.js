@@ -6,7 +6,9 @@ console.log(process.env.FASTGO_DB_CERT)
 const URI = 'mongodb+srv://doadmin:'+process.env.FASTGO_DB_PW+'@serverlessinstance0.bcvbj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 console.log(URI)
 try {
-    mongoose.connect(URI);
+    mongoose.connect(URI,{
+        useNewUrlParser: true,
+        useUnifiedTopology: true});
 }catch(err){
     console.log(err)
 }

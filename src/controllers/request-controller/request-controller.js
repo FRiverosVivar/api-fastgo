@@ -2,18 +2,11 @@ const RequestsController = {};
 const Request = require('../../models/Request/Request')
 const User = require('../../models/User/User')
 const chileanTime = require('../../utils/cl_time/cl_time')
+const mongoose = require('mongoose')
 RequestsController.index =  async (req,res) => {
     try{
         let userByEmail = await User.findByEmail(req.query.Email)
-        let solicitudes = await Request.find().populate({
-          path: 'Cliente',
-          select: '-tokens',
-          populate: {
-              path: 'Haulier',
-              select: '-tokens',
-          }
-        })
-        console.log(solicitudes)
+        let solicitudes = await Request.find()
         // console.log(user)
         // for(let solicitud of solicitudes) {
         //     if(solicitud.Status ===  1 && solicitud.Cliente.Email === User.Email){
@@ -80,6 +73,9 @@ RequestsController.start_request = async (req, res) => {
           res.status(400).json({error: "usuario no es transportista"})
         }
         request.Haulier = haulier
+        request.HaulierName = haulier.Names
+        request.HaulierDni = haulier.Dni
+        request.HaulierPhone = haulier.Phone
         request.Status = 3
         await request.save()
       
