@@ -68,8 +68,8 @@ RequestsController.start_request = async (req, res) => {
           console.log("request no esta en estado disponible")
           res.status(400).json({error: "request no esta en estado disponible"})
         }
-        if(haulier && !haulier.isHaulier){
-          console.log(haulier)
+        console.log(haulier.IsHaulier)
+        if(!haulier && !haulier.IsHaulier){
           res.status(400).json({error: "usuario no es transportista"})
         }
         request.Haulier = haulier
