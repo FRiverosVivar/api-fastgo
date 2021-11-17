@@ -30,9 +30,9 @@ const RequestsSchema = new Schema({
     DateFromString: String,
     DateTo: Date,
     DateToString: String,
-    HaulierName: {type: String, required: false},
-    HaulierDni: {type: String, required: false},
-    HaulierPhone: {type: String, required: false}
+    // HaulierName: {type: String, required: false},
+    // HaulierDni: {type: String, required: false},
+    // HaulierPhone: {type: String, required: false}
   },{
     timestamps: true,
     collection: "Request"
