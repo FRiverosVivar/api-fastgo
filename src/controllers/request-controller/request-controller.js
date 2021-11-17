@@ -73,9 +73,6 @@ RequestsController.start_request = async (req, res) => {
           res.status(400).json({error: "usuario no es transportista"})
         }
         request.Haulier = haulier
-        request.HaulierName = haulier.Names
-        request.HaulierDni = haulier.Dni
-        request.HaulierPhone = haulier.Phone
         request.Status = 3
         await request.save()
       
