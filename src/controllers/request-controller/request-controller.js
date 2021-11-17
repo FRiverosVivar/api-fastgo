@@ -29,9 +29,12 @@ RequestsController.create = async (req, res) => {
         const cliente = await User.findOne({_id: req.body.ClientId})
         console.log("cliente", cliente)
         solicitud.Cliente = cliente
-        delete solicitud.Cliente.tokens
-        delete solicitud.Cliente.password
-        
+
+        if(cliente.IsHaulier){
+          console.log("Transportista no puede crear solicitudes")
+          res.status(400).json({error: "Transportista no puede crear solicitudes"})
+        }
+
         if(solicitud.Estado == 1){
           solicitud.DateFrom = chileanTime(new Date(req.DateFrom)).toLocaleDateString("en-GB")
           solicitud.DateFromString = req.DateFrom
@@ -55,15 +58,21 @@ RequestsController.create = async (req, res) => {
 RequestsController.start_request = async (req, res) => {
     try {
         const id = req.params.id;
+        const Email = req.query.Email
+        const haulier = await User.findOne({Email: Email})
         const request = await Request.findOne({_id: id})
       
         if(request.Status != 2){
           console.log("request no esta en estado disponible")
           res.status(400).json({error: "request no esta en estado disponible"})
         }
-      
+        if(haulier && !haulier.isHaulier){
+          console.log(haulier)
+          res.status(400).json({error: "usuario no es transportista"})
+        }
+        request.Haulier = haulier
         request.Status = 3
-        await solicitud.save()
+        await request.save()
       
         res.status(200).json({
           message: 'Request updated',
