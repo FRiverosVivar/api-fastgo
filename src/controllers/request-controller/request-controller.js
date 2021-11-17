@@ -10,10 +10,10 @@ RequestsController.index =  async (req,res) => {
         let solicitudesFiltradas = []
         if(userByEmail.IsHaulier){
           for(let solicitud of solicitudes){
-            if(solicitud.status >= 3) {
-              if(solicitud.Haulier === userByEmail._id){
-                let Haulier = await User.findOne({_id: solicitud.Haulier})
-                solicitud.Haulier = Haulier
+            if(solicitud.Status >= 3) {
+              const requestHaulier = await User.findOne(solicitud.Haulier).select('Names _Id Lastnames Phone Dni')
+              if(requestHaulier._id.equals(userByEmail._id)){
+                solicitud.Haulier = requestHaulier
                 solicitudesFiltradas.push(solicitud)
               }
             }
@@ -23,7 +23,7 @@ RequestsController.index =  async (req,res) => {
           }
         }else {
           for(let solicitud of solicitudes){
-            if(solicitud.Cliente === userByEmail._id){
+            if(solicitud.Cliente.equals(userByEmail._id)){
               solicitudesFiltradas.push(solicitud)
             }
           }

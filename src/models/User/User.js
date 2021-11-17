@@ -67,7 +67,6 @@ UserSchema.pre('validate', async function(next){
 UserSchema.pre('save', async function (next) {
     // Hash the password before saving the user model
     const user = this
-    console.log(user)
     if (user.isModified('password')) {
         console.log("se ha modificado la clave")
         user.Password = await bcrypt.hash(user.Password, 8)
@@ -106,11 +105,7 @@ UserSchema.statics.find = async function (Email, Password) {
         if (!user) {
             throw new Error('Invalid Email credentials')
         }
-        console.log(user)
-        console.log(Password)
-        console.log(user.Password)
         let isPasswordMatch = await bcrypt.compare(Password, user.Password)
-        console.log(isPasswordMatch)
         if (!isPasswordMatch) {
             throw new Error('Invalid Password credentials')
         }
