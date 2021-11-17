@@ -5,7 +5,14 @@ const chileanTime = require('../../utils/cl_time/cl_time')
 RequestsController.index =  async (req,res) => {
     try{
         let userByEmail = await User.findByEmail(req.query.Email)
-        let solicitudes = await Request.find()
+        let solicitudes = await Request.find().populate({
+          path: 'Cliente',
+          select: '-tokens',
+          populate: {
+              path: 'Haulier',
+              select: '-tokens',
+          }
+        })
         console.log(solicitudes)
         // console.log(user)
         // for(let solicitud of solicitudes) {
