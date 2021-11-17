@@ -7,7 +7,29 @@ RequestsController.index =  async (req,res) => {
     try{
         let userByEmail = await User.findByEmail(req.query.Email)
         let solicitudes = await Request.find()
-        res.status(200).json(solicitudes)
+        let solicitudesFiltradas = []
+        if(userByEmail.IsHaulier){
+          for(let solicitud of solicitudes){
+            if(solicitud.status >= 3) {
+              if(solicitud.Haulier === userByEmail._id){
+                let Haulier = await User.findOne({_id: solicitud.Haulier})
+                solicitud.Haulier = Haulier
+                solicitudesFiltradas.push(solicitud)
+              }
+            }
+            else if(solicitud.status === 2) {
+              solicitudesFiltradas.push(solicitud)
+            }
+          }
+        }else {
+          for(let solicitud of solicitudes){
+            if(solicitud.Cliente === userByEmail._id){
+              solicitudesFiltradas.push(solicitud)
+            }
+          }
+        }
+        console.log(solicitudesFiltradas)
+        res.status(200).json(solicitudesFiltradas)
     } catch(error){
       console.log(error)
       res.status(400).json({error: "Ha ocurrido un error", status: 400})
