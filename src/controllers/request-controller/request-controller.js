@@ -27,7 +27,7 @@ RequestsController.index =  async (req,res) => {
                   solicitud.Haulier = requestHaulier
                 }
                 solicitudesFiltradas.push(solicitud)
-              
+              }
             }
           }
         }
