@@ -10,14 +10,11 @@ RequestsController.index =  async (req,res) => {
         let solicitudesFiltradas = []
         if(userByEmail.IsHaulier){
           for(let solicitud of solicitudes){
-            if(solicitud.Status >= 3) {
+            if(solicitud.Status >= 2) {
               const requestHaulier = await User.findOne(solicitud.Haulier).select('-tokens')
               if(requestHaulier._id.equals(userByEmail._id)){
                 solicitud.Haulier = requestHaulier
-                solicitudesFiltradas.push(solicitud)
               }
-            }
-            else if(solicitud.status === 2) {
               solicitudesFiltradas.push(solicitud)
             }
           }
