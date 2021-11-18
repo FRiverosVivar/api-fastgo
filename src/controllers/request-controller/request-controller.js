@@ -12,7 +12,7 @@ RequestsController.index =  async (req,res) => {
           for(let solicitud of solicitudes){
             if(solicitud.Status >= 2) {
               const requestHaulier = await User.findOne(solicitud.Haulier).select('-tokens')
-              if(requestHaulier._id.equals(userByEmail._id)){
+              if(solicitud.Status >= 3 && requestHaulier._id.equals(userByEmail._id)){
                 solicitud.Haulier = requestHaulier
               }
               solicitudesFiltradas.push(solicitud)
@@ -21,7 +21,13 @@ RequestsController.index =  async (req,res) => {
         }else {
           for(let solicitud of solicitudes){
             if(solicitud.Cliente.equals(userByEmail._id)){
-              solicitudesFiltradas.push(solicitud)
+              if(solicitud.Status >= 2 ) {
+                const requestHaulier = await User.findOne(solicitud.Haulier).select('-tokens')
+                if(solicitud.Status >= 3){
+                  solicitud.Haulier = requestHaulier
+                }
+                solicitudesFiltradas.push(solicitud)
+              
             }
           }
         }
@@ -38,7 +44,7 @@ RequestsController.create = async (req, res) => {
         const solicitud = new Request(req.body)
         console.log("Request: ", solicitud)
   
-        const cliente = await User.findOne({_id: req.body.ClientId})
+        const cliente = await User.findOne({_id: req.body.ClientId}).select('-tokens')
         console.log("cliente", cliente)
         solicitud.Cliente = cliente
 
