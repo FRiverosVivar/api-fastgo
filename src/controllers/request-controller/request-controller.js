@@ -14,6 +14,8 @@ RequestsController.index =  async (req,res) => {
               const requestHaulier = await User.findOne(solicitud.Haulier).select('-tokens')
               if(solicitud.Status >= 3 && requestHaulier._id.equals(userByEmail._id)){
                 solicitud.Haulier = requestHaulier
+                solicitudesFiltradas.push(solicitud)
+                continue
               }
               solicitudesFiltradas.push(solicitud)
             }
