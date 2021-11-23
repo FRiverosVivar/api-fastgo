@@ -28,16 +28,16 @@
   <summary>Tabla de contenidos</summary>
   <ol>
     <li>
-      <a href="#about-the-project">Acerca del proyecto</a>
+      <a href="#acerca-del-proyecto">Acerca del proyecto</a>
     </li>
     <li>
-      <a href="#built-with">Tecnologias</a>
+      <a href="#tecnologias">Tecnologias</a>
     </li>
-    <li><a href="#integrantes">Integrantes</a></li>
+    <li><a href="#programadores">Integrantes</a></li>
   </ol>
 </details>
 
-## About The Project
+## Acerca del proyecto
 
 La aplicación está enfocada en proveer al usuario un sistema confiable de gestión de carga y transporte,
 es decir apunta tanto para clientes que buscan una alternativa para que su carga sea transportada a algún punto del país, 
@@ -46,7 +46,7 @@ Siendo la aplicación el puente y red entre el cliente y el transportista, entre
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-## Built With
+## Tecnologias
 
 En esta sección estarán listados las tecnologias (lenguaje, frameworks y librarias) usadas en este proyecto.
 
@@ -63,7 +63,7 @@ En esta sección estarán listados las tecnologias (lenguaje, frameworks y libra
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-## Built With
+## Programadores
 
 * <a href="https://www.linkedin.com/in/franco-riveros-vivar-6759a1179/">Franco Antonio Riveros Vivar</a>
 * Mathias Lucero Fredes
