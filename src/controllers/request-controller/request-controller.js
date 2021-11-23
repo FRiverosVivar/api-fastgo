@@ -96,7 +96,7 @@ RequestsController.final_dir = async (req, res) => {
     const id = req.query.Id;
     const solicitud = await Request.findOne({_id: id})
   
-    if(solicitud.Estado != 3){
+    if(solicitud.Status != 3){
       console.log("solicitud no esta en estado en curso")
       res.status(400).json({error: "solicitud no esta en estado en curso"})
     }
@@ -114,12 +114,12 @@ RequestsController.stop_request = async (req, res) => {
     const user = await User.findOne({Email: req.query.Email})
     const solicitud = await Request.findOne({_id: id})
   
-    if(solicitud.Estado != 5){
+    if(solicitud.Status != 5){
       console.log("solicitud no esta en estado en curso final")
       res.status(400).json({error: "solicitud no esta en estado en curso final"})
     }
     user.Income =+ req.query.Income
-    solicitud.Estado = 4
+    solicitud.Status = 4
     await user.save()
     await solicitud.save()
   
