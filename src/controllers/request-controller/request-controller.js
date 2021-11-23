@@ -6,65 +6,15 @@ const mongoose = require('mongoose')
 RequestsController.index =  async (req,res) => {
     try{
         let userByEmail = await User.findByEmail(req.query.Email)
-        let solicitudes = await Request.find()
         let solicitudesFiltradas = []
         if(userByEmail.IsHaulier){
-          for(let solicitud of solicitudes){
-            const requestHaulier = await User.findOne(solicitud.Haulier).select('-tokens')
-            switch(solicitud.Status){
-              case 2: {
-                solicitudesFiltradas.push(solicitud)
-                break;
-              }
-              case 3: {
-                if(requestHaulier._id.equals(userByEmail._id)){
-                  solicitud.Haulier = requestHaulier
-                  solicitudesFiltradas.push(solicitud)
-                }
-                break;
-              }
-              case 4: {
-                if(requestHaulier._id.equals(userByEmail._id)){
-                  solicitud.Haulier = requestHaulier
-                  solicitudesFiltradas.push(solicitud)
-                }
-                break;
-              }
-              case 5: {
-                if(requestHaulier._id.equals(userByEmail._id)){
-                  solicitud.Haulier = requestHaulier
-                  solicitudesFiltradas.push(solicitud)
-                }
-                break;
-              }
-            }
-          }
+          let solicitudes = await Request.find({Haulier: userByEmail._id})
+          let solicitudesDisponibles = await Request.find({Status: 2})
+          solicitudesFiltradas = solicitudesFiltradas.concat(solicitudes)
+          solicitudesFiltradas = solicitudesFiltradas.concat(solicitudesDisponibles)
         }else {
-          for(let solicitud of solicitudes){
-            if(solicitud.Cliente.equals(userByEmail._id)){
-              switch(solicitud.Status){
-                case 2: {
-                  solicitudesFiltradas.push(solicitud)
-                  break;
-                }
-                case 3: {
-                  const requestHaulier = await User.findOne(solicitud.Haulier).select('-tokens')
-                  solicitud.Haulier = requestHaulier
-                  solicitudesFiltradas.push(solicitud)
-                }
-                case 4: {
-                  const requestHaulier = await User.findOne(solicitud.Haulier).select('-tokens')
-                  solicitud.Haulier = requestHaulier
-                  solicitudesFiltradas.push(solicitud)
-                }
-                case 5: {
-                  const requestHaulier = await User.findOne(solicitud.Haulier).select('-tokens')
-                  solicitud.Haulier = requestHaulier
-                  solicitudesFiltradas.push(solicitud)
-                }
-              }
-            }
-          }
+          let solicitudes = await Request.find({Cliente: userByEmail._id})
+          solicitudesFiltradas = solicitudesFiltradas.concat(solicitudes)
         }
         res.status(200).json(solicitudesFiltradas)
     } catch(error){

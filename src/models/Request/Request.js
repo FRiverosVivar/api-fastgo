@@ -8,12 +8,12 @@ const model = mongoose.model
 const RequestsSchema = new Schema({
     Cliente:{
       type: Schema.Types.ObjectId,
-      ref: "User",
+     // ref: "User",
       required: true,
     },
     Haulier:{
       type: Schema.Types.ObjectId,
-      ref: "User"
+     // ref: "User"
     },
     Phone: String,
     Status: {type: Number, default: 0},
