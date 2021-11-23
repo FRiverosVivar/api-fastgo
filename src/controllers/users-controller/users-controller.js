@@ -35,6 +35,7 @@ UsersController.index = async (req, res) => {
 }
 UsersController.getInfo = async (req, res) => {
   try{
+      console.log(req.query.Id)
       const result = await User.findById(req.query.Id).select("-tokens");
       console.log(req.query)
       if(!result){
