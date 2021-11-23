@@ -4,16 +4,17 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Schema = mongoose.Schema
 const model = mongoose.model
+const User = require('../../models/User/User')
 
 const RequestsSchema = new Schema({
     Cliente:{
       type: Schema.Types.ObjectId,
-     // ref: "User",
+      ref: "User",
       required: true,
     },
     Haulier:{
       type: Schema.Types.ObjectId,
-     // ref: "User"
+      ref: "User",
     },
     Phone: String,
     Status: {type: Number, default: 0},

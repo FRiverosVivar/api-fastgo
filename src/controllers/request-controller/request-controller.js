@@ -6,15 +6,20 @@ const mongoose = require('mongoose')
 RequestsController.index =  async (req,res) => {
     try{
         let userByEmail = await User.findByEmail(req.query.Email)
+        
         let solicitudesFiltradas = []
         if(userByEmail.IsHaulier){
-          let solicitudes = await Request.find({Haulier: userByEmail._id})
-          let solicitudesDisponibles = await Request.find({Status: 2})
-          solicitudesFiltradas = solicitudesFiltradas.concat(solicitudes)
-          solicitudesFiltradas = solicitudesFiltradas.concat(solicitudesDisponibles)
+          let solicitudesStatusEnCurso = await Request.find({Status:3, Haulier: userByEmail._id})
+          let solicitudesStatusDisponibles = await Request.find({Status:2})
+          let solicitudesStatusEnCursoFinal = await Request.find({Status:5, Haulier: userByEmail._id})
+          let solicitudesStatusFinalizadas = await Request.find({Status:4, Haulier: userByEmail._id})
+          solicitudesFiltradas = solicitudesFiltradas.concat(solicitudesStatusEnCurso, solicitudesStatusDisponibles, solicitudesStatusEnCursoFinal, solicitudesStatusFinalizadas)
         }else {
-          let solicitudes = await Request.find({Cliente: userByEmail._id})
-          solicitudesFiltradas = solicitudesFiltradas.concat(solicitudes)
+          let solicitudesStatusEnCurso = await Request.find({Status:3, Cliente: userByEmail._id})
+          let solicitudesStatusDisponibles = await Request.find({Status:2, Cliente: userByEmail._id})
+          let solicitudesStatusEnCursoFinal = await Request.find({Status:5, Cliente: userByEmail._id})
+          let solicitudesStatusFinalizadas = await Request.find({Status:4, Cliente: userByEmail._id})
+          solicitudesFiltradas = solicitudesFiltradas.concat(solicitudesStatusEnCurso, solicitudesStatusDisponibles, solicitudesStatusEnCursoFinal, solicitudesStatusFinalizadas)
         }
         res.status(200).json(solicitudesFiltradas)
     } catch(error){

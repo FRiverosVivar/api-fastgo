@@ -33,4 +33,17 @@ UsersController.index = async (req, res) => {
       res.status(400).json({error: "Ha ocurrido un error", status: 400})
   }
 }
+UsersController.getInfo = async (req, res) => {
+  try{
+      const result = await User.findById(req.query.Id).select("-tokens");
+      console.log(req.query)
+      if(!result){
+          return res.status(401).send({error: "un error"})
+      }
+      res.status(200).json(result)
+  } catch(error){
+      console.log(error)
+      res.status(400).json({error: "Ha ocurrido un error", status: 400})
+  }
+}
 module.exports = UsersController
