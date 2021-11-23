@@ -33,7 +33,7 @@
     <li>
       <a href="#tecnologias">Tecnologias</a>
     </li>
-    <li><a href="#integrantes">Integrantes</a></li>
+    <li><a href="#programadores">Integrantes</a></li>
   </ol>
 </details>
 
