@@ -36,8 +36,8 @@ UsersController.index = async (req, res) => {
 UsersController.getInfo = async (req, res) => {
   try{
       console.log(req.query.Id)
-      const result = await User.findById(req.query.Id).select("-tokens");
-      console.log(req.query)
+      const result = await User.findOne({_id: req.query.Id}).select("-tokens");
+      console.log(result)
       if(!result){
           return res.status(401).send({error: "un error"})
       }
