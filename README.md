@@ -28,10 +28,10 @@
   <summary>Tabla de contenidos</summary>
   <ol>
     <li>
-      <a href="#about-the-project">Acerca del proyecto</a>
+      <a href="#acerca-del-proyecto">Acerca del proyecto</a>
     </li>
     <li>
-      <a href="#built-with">Tecnologias</a>
+      <a href="#tecnologias">Tecnologias</a>
     </li>
     <li><a href="#integrantes">Integrantes</a></li>
   </ol>
