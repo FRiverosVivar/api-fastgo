@@ -9,7 +9,13 @@ const UserSchema = new Schema({
     Avatar: {type: String, required: false},
     Names: {type: String, required: true},
     Lastnames: {type: String, required: true},
-    Income: Number,
+    Income: [
+        {
+            _id:false,
+            date: {type: String, required: false},
+            income: {type: String, required: false}
+        }
+    ],
     Dni: {type: String, required: true},
     IsHaulier: {type: Boolean, required: true},
     CuentaBanco: {type: String, required: true},

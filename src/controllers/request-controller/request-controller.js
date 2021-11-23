@@ -103,7 +103,6 @@ RequestsController.final_dir = async (req, res) => {
   
     solicitud.Status = 5
     await solicitud.save()
-    console.log(solicitud)
     res.status(200).json({
       message: 'Solicitud updated',
       solicitud: solicitud
@@ -118,7 +117,10 @@ RequestsController.stop_request = async (req, res) => {
       console.log("solicitud no esta en estado en curso final")
       res.status(400).json({error: "solicitud no esta en estado en curso final"})
     }
-    user.Income =+ req.query.Income
+    user.Income.push({
+      date: req.query.Date,
+      income: req.query.Income
+    })
     solicitud.Status = 4
     await user.save()
     await solicitud.save()
