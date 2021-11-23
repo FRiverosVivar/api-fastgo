@@ -101,9 +101,9 @@ RequestsController.final_dir = async (req, res) => {
       res.status(400).json({error: "solicitud no esta en estado en curso"})
     }
   
-    solicitud.Estado = 5
+    solicitud.Status = 5
     await solicitud.save()
-  
+    console.log(solicitud)
     res.status(200).json({
       message: 'Solicitud updated',
       solicitud: solicitud
