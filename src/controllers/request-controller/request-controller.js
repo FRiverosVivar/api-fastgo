@@ -10,30 +10,62 @@ RequestsController.index =  async (req,res) => {
         let solicitudesFiltradas = []
         if(userByEmail.IsHaulier){
           for(let solicitud of solicitudes){
-            if(solicitud.Status >= 2) {
-              const requestHaulier = await User.findOne(solicitud.Haulier).select('-tokens')
-              if(solicitud.Status >= 3 && requestHaulier._id.equals(userByEmail._id)){
-                solicitud.Haulier = requestHaulier
+            const requestHaulier = await User.findOne(solicitud.Haulier).select('-tokens')
+            switch(solicitud.Status){
+              case 2: {
                 solicitudesFiltradas.push(solicitud)
-                continue
+                break;
               }
-              solicitudesFiltradas.push(solicitud)
+              case 3: {
+                if(requestHaulier._id.equals(userByEmail._id)){
+                  solicitud.Haulier = requestHaulier
+                  solicitudesFiltradas.push(solicitud)
+                }
+                break;
+              }
+              case 4: {
+                if(requestHaulier._id.equals(userByEmail._id)){
+                  solicitud.Haulier = requestHaulier
+                  solicitudesFiltradas.push(solicitud)
+                }
+                break;
+              }
+              case 5: {
+                if(requestHaulier._id.equals(userByEmail._id)){
+                  solicitud.Haulier = requestHaulier
+                  solicitudesFiltradas.push(solicitud)
+                }
+                break;
+              }
             }
           }
         }else {
           for(let solicitud of solicitudes){
             if(solicitud.Cliente.equals(userByEmail._id)){
-              if(solicitud.Status >= 2 ) {
-                const requestHaulier = await User.findOne(solicitud.Haulier).select('-tokens')
-                if(solicitud.Status >= 3){
-                  solicitud.Haulier = requestHaulier
+              switch(solicitud.Status){
+                case 2: {
+                  solicitudesFiltradas.push(solicitud)
+                  break;
                 }
-                solicitudesFiltradas.push(solicitud)
+                case 3: {
+                  const requestHaulier = await User.findOne(solicitud.Haulier).select('-tokens')
+                  solicitud.Haulier = requestHaulier
+                  solicitudesFiltradas.push(solicitud)
+                }
+                case 4: {
+                  const requestHaulier = await User.findOne(solicitud.Haulier).select('-tokens')
+                  solicitud.Haulier = requestHaulier
+                  solicitudesFiltradas.push(solicitud)
+                }
+                case 5: {
+                  const requestHaulier = await User.findOne(solicitud.Haulier).select('-tokens')
+                  solicitud.Haulier = requestHaulier
+                  solicitudesFiltradas.push(solicitud)
+                }
               }
             }
           }
         }
-        console.log(solicitudesFiltradas)
         res.status(200).json(solicitudesFiltradas)
     } catch(error){
       console.log(error)
