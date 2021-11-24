@@ -33,7 +33,7 @@ RequestsController.create = async (req, res) => {
         const solicitud = new Request(req.body)
         console.log("Request: ", solicitud)
   
-        const cliente = await User.findOne({_id: req.body.ClientId}).select('-tokens')
+        const cliente = await User.findOne({_id: req.body.Cliente}).select('-tokens')
         console.log("cliente", cliente)
         solicitud.Cliente = cliente
 
